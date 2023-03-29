@@ -1,0 +1,48 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+
+
+const Single = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const loggedInUser = sessionStorage.getItem("authenticated");
+    if (!loggedInUser) {
+      navigate("/login");
+    }
+  }, []);
+  const { id } = useParams(); //
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    let url = `${process.env.REACT_APP_API_ROOT}/posts/${id}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log("res", res);
+        setPost(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  return (
+    <>
+      {Object.keys(post).length ? (
+        <div className=" py-20 px-28 flex flex-col  m-auto max-w-4xl  ">
+          <div>
+            <h1 className="text-2xl font-bold mb-2 capitalize">{post.title.rendered}</h1>
+          </div>
+          <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+          
+        </div>
+        
+      ) : (
+        "No post here.."
+      )}
+    </>
+  );
+};
+
+export default Single;

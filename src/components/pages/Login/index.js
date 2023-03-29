@@ -40,6 +40,7 @@ const Login = () => {
           console.log("response", res);
           if (res.status === 200 && res.statusText === "OK") {
             // sessionStorage.setItem('user', JSON.stringify(res.data));
+            localStorage.setItem('user',JSON.stringify(res.data));
             setauthenticated(true);
             sessionStorage.setItem("authenticated", true);
             alert("welcome "+ res.data.user_nicename);

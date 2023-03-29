@@ -14,7 +14,9 @@ const Navbar = () => {
         <li>
           <Link to="/posts">Posts </Link>
         </li>
-
+        <li>
+          <Link to="/addposts">Add Posts </Link>
+        </li>
         {!loggedInUser ? (
           <li>
             <Link to="/login">Login</Link>
